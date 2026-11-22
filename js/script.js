@@ -15,3 +15,27 @@ const busca = document.querySelector("#busca");
 // TODO 2: chame render() ao carregar a página e a cada evento "input" na busca.
 
 // escreva seu código aqui
+function render(filtro = ""){
+    const termo = filtro.trim().toLowerCase();
+    const filtrados = cursos.filter(curso => curso.nome.toLowerCase().includes(termo));
+
+    lista.innerHTML = "";
+
+    if (filtrados.length === 0) {
+        const vazio = document.createElement("li");
+        vazio.textContent = "Nada encontrado";
+        lista.appendChild(vazio);
+        return;
+    };
+
+    filtrados.map((curso) => {
+        const item = document.createElement("li");
+        item.textContent = `${curso.nome} (${curso.area})`;
+        lista.appendChild(item);
+    });
+};
+
+render();
+busca.addEventListener("input", function() {
+    render(busca.value);
+});
